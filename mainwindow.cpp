@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer(this);
     flag = false;
     connect(timer,SIGNAL(timeout()),this,SLOT(readFrame()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -61,16 +63,20 @@ void MainWindow::cartoonifyImage(cv::Mat &srcColor, cv::Mat &dst)
 void MainWindow::readFrame()
 {
 
-    camera >>frame;
+    if ( cameraFlag )
+        camera >>frame;
+    else
+        videoFile >> frame;
 
     if(frame.empty()){
         std::cerr<<"ERROR：ouldn't grab a camera frame."<<std::endl;
         exit(1);
-    }
+        }
     if (flag)
-            cartoonifyImage(frame , dstImage);
-        else
-            frame.copyTo(dstImage);
+        cartoonifyImage(frame , dstImage);
+    else
+        frame.copyTo(dstImage);
+
     img = cvMat2QImage(dstImage);
     ui->play->resize(frame.cols,frame.rows);
     ui->play->setPixmap(QPixmap::fromImage(img));
@@ -82,6 +88,7 @@ void MainWindow::readFrame()
 void MainWindow::on_openCamera_clicked()
 {
         camera.open(0);
+        cameraFlag = true;
        if (!camera.isOpened())
        {
            std::cerr <<"Could not access the camera or video!"<<
@@ -111,4 +118,23 @@ void MainWindow::on_openDialog_clicked()
     dialog = new Dialog(this);
     dialog->setModal(false);
     dialog->show();
+}
+
+void MainWindow::on_openFile_triggered()
+{
+    /*说明：这样就会产生一个对话框，和系统的资源管理器差不多的。返回的是你选择文件的 绝对路径。
+    参数1：父窗口
+    参数2：对话框的标题
+    参数3：默认的打开的位置，如”我的文档“等
+    参数4：文件的过滤器，注意文件类型之间用  ；；  分开
+    */
+    QString fileName = QFileDialog::getOpenFileName(this, tr("选择视频文件"), " ",  tr("Allfile(*.*);;video(*.avi);;video(*.mp4)"));
+    std::string fileSource = fileName.toStdString();
+    //std::cout << fileSource <<std::endl;
+    videoFile.open( fileSource );
+    if( !videoFile.isOpened() ){
+        std::cout << "Video file open falied!"<< std::endl;
+        exit(0);
+    }
+    timer->start(13);
 }

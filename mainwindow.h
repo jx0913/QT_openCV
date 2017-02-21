@@ -7,6 +7,7 @@
 #include <dialog.h>
 #include <opencv2/opencv.hpp>
 #include <cvmat2qimage.h>
+#include <QFileDialog>
 namespace Ui {
 class MainWindow;
 }
@@ -34,14 +35,18 @@ private slots:
 
     void on_openDialog_clicked();
 
+    void on_openFile_triggered();
+
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
     QImage img;
-    cv::VideoCapture camera;
+    cv::VideoCapture camera, videoFile;
     cv::Mat frame,dstImage;
     bool flag;
     Dialog *dialog;
+    bool cameraFlag = false;
+
 };
 
 #endif // MAINWINDOW_H

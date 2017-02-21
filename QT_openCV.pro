@@ -34,12 +34,15 @@ LIBS += -L/usr/local/Cellar/opencv3/3.2.0/lib \
 SOURCES += main.cpp\
         mainwindow.cpp \
     dialog.cpp \
-    cvmat2qimage.cpp
+    cvmat2qimage.cpp \
+    dialog2.cpp
 
 HEADERS  += mainwindow.h \
     dialog.h \
     cvmat2qimage.h \
-    cascadedetect.h
+    cascadedetect.h \
+    dialog2.h
 
 FORMS    += mainwindow.ui \
-    dialog.ui
+    dialog.ui \
+    dialog2.ui

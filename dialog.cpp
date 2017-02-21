@@ -30,7 +30,7 @@ Dialog::~Dialog()
 
 void Dialog::on_begin_play_clicked()
 {
-    timer->start(13);  //显示时间控制
+    timer->start(10);  //显示时间控制
     camera >> frame;//从摄像头读取一帧图像
     if( frame.empty()){
         std::cout << "No captured frame --Break!"<<std::endl;
