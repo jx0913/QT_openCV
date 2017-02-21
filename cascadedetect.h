@@ -1,0 +1,4 @@
+#ifndef CASCADEDETECT_H
+#define CASCADEDETECT_H
+
+#endif // CASCADEDETECT_H
