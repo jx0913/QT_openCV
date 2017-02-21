@@ -22,10 +22,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH +=  /usr/local/Cellar/opencv3/3.2.0/include/
+                #/usr/local/Cellar/opencv3/3.2.0/include/opencv
+                #/usr/local/Cellar/opencv3/3.2.0/include/opencv2
+LIBS += -L/usr/local/Cellar/opencv3/3.2.0/lib \
+        -lopencv_shape -lopencv_stitching -lopencv_objdetect -lopencv_superres -lopencv_videostab -lopencv_calib3d\
+        -lopencv_highgui -lopencv_imgcodecs\
+        -lopencv_core -lopencv_features2d -lopencv_videoio -lopencv_video\
+        -lopencv_photo -lopencv_ml -lopencv_imgproc
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    dialog.cpp \
+    cvmat2qimage.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    dialog.h \
+    cvmat2qimage.h \
+    cascadedetect.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialog.ui
